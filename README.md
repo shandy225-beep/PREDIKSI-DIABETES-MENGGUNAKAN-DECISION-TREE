@@ -1,428 +1,492 @@
-# Diabetes Detection using Decision Tree Classifier
+# Prediksi Diabetes Menggunakan Decision Tree
 
-##  Deskripsi Proyek
+## 📋 Deskripsi Proyek
 
-Proyek ini mengimplementasikan sistem deteksi diabetes menggunakan algoritma **Decision Tree Classifier** dengan **Mutual Information** untuk feature selection. Proyek ini dikembangkan oleh **Kelompok 3** sebagai bagian dari pembelajaran Machine Learning.
+Proyek ini mengimplementasikan sistem prediksi diabetes menggunakan algoritma **Decision Tree Classifier** dengan **Mutual Information** untuk feature selection. Proyek ini dirancang untuk dijalankan di **Google Colab**.
 
 ### Fitur Utama
 
--  **Feature Selection** menggunakan Mutual Information
--  **Decision Tree Classifier** untuk prediksi diabetes
--  **Evaluasi Model** lengkap (Accuracy, Precision, Recall, F1-Score)
--  **Visualisasi** Confusion Matrix dan Feature Importance
--  **Support** untuk local environment dan Google Colab
+- ✅ **Feature Selection** menggunakan Mutual Information
+- ✅ **Decision Tree Classifier** untuk prediksi diabetes
+- ✅ **Evaluasi Model** dengan Accuracy dan Confusion Matrix
+- ✅ **Visualisasi** Confusion Matrix menggunakan Seaborn
+- ✅ **Optimized** untuk Google Colab
 
 ---
 
-##  Struktur Proyek
+## 📁 Struktur Proyek
 
 ```
-DT_Diabetes/
-
- mutual_information_selection.py   # Script untuk feature selection
- decision_tree_model.py            # Script untuk training dan evaluasi model
- requirements.txt                   # Daftar dependencies
- README.md                          # Dokumentasi proyek
- .gitignore                         # File yang diabaikan Git
-
- cleaned_diabetes_dataset.csv       # Dataset asli 
- reduced_6Fitur_diabetes_dataset.csv # Dataset hasil feature selection
+PREDIKSI-DIABETES-MENGGUNAKAN-DECISION-TREE/
+│
+├── mutual_information_selection.py        # Script untuk feature selection
+├── decision_tree_model.py                 # Script untuk training dan evaluasi model
+├── diabetes_prediction_dataset.csv.zip    # Dataset diabetes (compressed)
+├── .gitignore                             # File yang diabaikan Git
+└── README.md                              # Dokumentasi proyek
 ```
 
 ---
 
-##  Cara Menggunakan
+## 🚀 Cara Menggunakan
 
-### Metode 1: Local Environment (Python)
+### Metode:  Google Colab (Recommended)
 
-#### 1. **Install Dependencies**
+#### 1. **Persiapan Dataset**
 
-```bash
-pip install -r requirements.txt
-```
+1. Extract file `diabetes_prediction_dataset.csv. zip`
+2. Bersihkan dataset jika diperlukan dan simpan sebagai `cleaned_diabetes_dataset.csv`
 
 #### 2. **Feature Selection dengan Mutual Information**
 
-```bash
-python mutual_information_selection.py
+Upload dan jalankan `mutual_information_selection.py` di Google Colab:
+
+```python
+# Upload file mutual_information_selection.py ke Colab
+# Kemudian jalankan: 
+%run mutual_information_selection.py
 ```
+
+Atau copy-paste kode langsung ke cell Colab dan jalankan.
 
 **Output:**
 - Tabel Mutual Information scores untuk setiap fitur
-- File 
-educed_6Fitur_diabetes_dataset.csv dengan fitur terpilih
+- File `reduced_6Fitur_diabetes_dataset.csv` dengan fitur terpilih
 
 #### 3. **Training dan Evaluasi Model**
 
-```bash
-python decision_tree_model.py
+Upload dan jalankan `decision_tree_model.py` di Google Colab:
+
+```python
+# Upload file decision_tree_model.py ke Colab
+# Kemudian jalankan:
+%run decision_tree_model.py
 ```
+
+**Proses yang terjadi:**
+1. Upload dataset hasil feature selection (`reduced_6Fitur_diabetes_dataset.csv`)
+2. Split data menjadi training (80%) dan testing (20%)
+3. Training model Decision Tree
+4. Evaluasi model dan tampilkan akurasi
+5. Visualisasi Confusion Matrix
 
 **Output:**
-- Metrik evaluasi (Accuracy, Precision, Recall, F1-Score)
-- Confusion matrix (saved as PNG)
-- Feature importance chart (saved as PNG)
-- Classification report
+- Akurasi Model (dalam persentase)
+- Confusion Matrix (visualisasi)
 
 ---
 
-### Metode 2: Google Colab
-
-#### 1. **Upload File ke Colab**
-
-Upload kedua file Python ke Google Colab:
-- mutual_information_selection.py
-- decision_tree_model.py
-
-#### 2. **Jalankan Feature Selection**
-
-```python
-# Jalankan di cell pertama
-!python mutual_information_selection.py
-```
-
-#### 3. **Jalankan Model Decision Tree**
-
-```python
-# Jalankan di cell kedua
-!python decision_tree_model.py
-```
-
-Atau gunakan fungsi 
-un_in_colab() yang sudah disediakan:
-
-```python
-from decision_tree_model import run_in_colab
-run_in_colab()
-```
-
----
-
-##  Detail Implementasi
+## 📊 Detail Implementasi
 
 ### 1. Mutual Information Feature Selection
 
-**File:** mutual_information_selection.py
+**File:** `mutual_information_selection.py`
 
-**Proses:**
-1. Load dataset diabetes yang sudah dibersihkan
-2. Encode fitur kategorikal menggunakan LabelEncoder
-3. Hitung Mutual Information score untuk setiap fitur
-4. Filter fitur dengan MI Score >= threshold (default: 0.01)
-5. Simpan dataset baru dengan fitur terpilih
+**Fungsi:**
+- Load dataset diabetes yang sudah dibersihkan
+- Encode fitur kategorikal menggunakan LabelEncoder
+- Hitung Mutual Information score untuk setiap fitur
+- Filter fitur dengan MI Score >= threshold (default:  0.01)
+- Simpan dataset baru dengan fitur terpilih
 
 **Konfigurasi:**
 ```python
-INPUT_FILE = r"C:\Users\rifki\Downloads\cleaned_diabetes_dataset.csv"
+INPUT_FILE = r"C:\Users\rifki\Downloads\cleaned_diabetes_dataset. csv"
 OUTPUT_FILE = 'reduced_6Fitur_diabetes_dataset.csv'
 MI_THRESHOLD = 0.01
 RANDOM_STATE = 42
 ```
 
-**Fungsi Utama:**
-- load_dataset() - Load dataset dari CSV
-- encode_categorical_features() - Encode fitur kategorikal
-- calculate_mutual_information() - Hitung MI scores
-- select_features() - Pilih fitur berdasarkan threshold
-- save_reduced_dataset() - Simpan dataset baru
+**⚠️ Catatan:** Ubah `INPUT_FILE` sesuai dengan lokasi dataset Anda, atau upload file melalui Google Colab. 
+
+**Alur Kerja:**
+1. Load dataset CSV
+2. Encode semua fitur kategorikal ke numerik
+3. Pisahkan fitur (X) dan target (y)
+4. Hitung MI scores untuk setiap fitur
+5.  Tampilkan dan urutkan berdasarkan MI Score
+6. Filter fitur dengan score >= threshold
+7. Simpan dataset baru dengan fitur terpilih
 
 ---
 
 ### 2. Decision Tree Classifier
 
-**File:** decision_tree_model.py
+**File:** `decision_tree_model.py`
 
-**Proses:**
-1. Load dataset hasil feature selection
-2. Split data menjadi training (80%) dan testing (20%)
-3. Training model Decision Tree
-4. Evaluasi model dengan berbagai metrik
-5. Visualisasi hasil evaluasi
+**Fungsi:**
+- Upload dataset hasil feature selection melalui Colab
+- Split data menjadi training (80%) dan testing (20%)
+- Training model Decision Tree
+- Prediksi dan evaluasi model
+- Visualisasi Confusion Matrix
 
 **Konfigurasi:**
 ```python
-DATASET_FILE = 'reduced_6Fitur_diabetes_dataset.csv'
-TEST_SIZE = 0.2  # 20% untuk testing
-RANDOM_STATE = 42
+TEST_SIZE = 0.2        # 20% untuk testing
+RANDOM_STATE = 42      # Untuk reproducibility
 ```
 
 **Parameter Model:**
 ```python
-DecisionTreeClassifier(
-    random_state=42,
-    criterion='gini',      # Metrik split: 'gini' atau 'entropy'
-    max_depth=None,        # Kedalaman maksimal tree
-    min_samples_split=2,   # Minimum sampel untuk split
-    min_samples_leaf=1     # Minimum sampel di leaf node
-)
+DecisionTreeClassifier(random_state=42)
 ```
 
-**Fungsi Utama:**
-- load_dataset() - Load dataset
-- prepare_data() - Pisahkan fitur dan label
-- split_data() - Split train/test dengan stratification
-- 	rain_model() - Training Decision Tree
-- evaluate_model() - Evaluasi dengan multiple metrics
-- plot_confusion_matrix() - Visualisasi confusion matrix
-- plot_feature_importance() - Visualisasi feature importance
-- plot_decision_tree() - Visualisasi struktur tree
+**Alur Kerja:**
+1. Upload dataset melalui `files.upload()`
+2. Baca CSV menggunakan pandas
+3. Pisahkan fitur (X) dan label (y)
+4. Split data dengan `train_test_split`
+5. Training model Decision Tree
+6. Prediksi pada data testing
+7. Hitung accuracy dan confusion matrix
+8. Tampilkan hasil dan visualisasi
 
 ---
 
-##  Metrik Evaluasi
+## 📈 Metrik Evaluasi
 
 Model dievaluasi menggunakan metrik berikut:
 
 | Metrik | Deskripsi |
 |--------|-----------|
-| **Accuracy** | Persentase prediksi yang benar |
-| **Precision** | Ketepatan prediksi positif |
-| **Recall** | Kemampuan mendeteksi kasus positif |
-| **F1-Score** | Harmonic mean dari Precision dan Recall |
-| **Confusion Matrix** | Matrix prediksi vs aktual |
+| **Accuracy** | Persentase prediksi yang benar dari seluruh data testing |
+| **Confusion Matrix** | Matrix yang menunjukkan True Positive, True Negative, False Positive, dan False Negative |
+
+**Interpretasi Confusion Matrix:**
+
+```
+                Predicted
+                No    Yes
+Actual  No     TN     FP
+        Yes    FN     TP
+```
+
+- **True Negative (TN):** Prediksi No, Aktual No ✅
+- **False Positive (FP):** Prediksi Yes, Aktual No ❌
+- **False Negative (FN):** Prediksi No, Aktual Yes ❌
+- **True Positive (TP):** Prediksi Yes, Aktual Yes ✅
 
 ---
 
-##  Kustomisasi
+## 🔧 Kustomisasi
 
 ### Mengubah Threshold Mutual Information
 
-Edit di mutual_information_selection.py:
+Edit di `mutual_information_selection.py`:
 
 ```python
-MI_THRESHOLD = 0.05  # Ubah nilai threshold (default: 0.01)
+threshold = 0.05  # Ubah nilai threshold (default: 0.01)
 ```
 
-Nilai threshold lebih tinggi = fitur yang dipilih lebih sedikit (lebih selektif)
+- Nilai threshold **lebih tinggi** = fitur yang dipilih **lebih sedikit** (lebih selektif)
+- Nilai threshold **lebih rendah** = fitur yang dipilih **lebih banyak**
 
 ### Mengubah Parameter Decision Tree
 
-Edit di decision_tree_model.py:
+Edit di `decision_tree_model.py`:
 
 ```python
 model = DecisionTreeClassifier(
-    criterion='entropy',     # Gunakan entropy sebagai ganticriterion
-    max_depth=10,            # Batasi kedalaman untuk mencegah overfitting
-    min_samples_split=10,    # Minimal sampel untuk split node
-    min_samples_leaf=5       # Minimal sampel di leaf node
+    random_state=42,
+    criterion='entropy',      # Gunakan 'gini' atau 'entropy'
+    max_depth=10,             # Batasi kedalaman tree
+    min_samples_split=10,     # Minimal sampel untuk split node
+    min_samples_leaf=5        # Minimal sampel di leaf node
 )
 ```
+
+**Parameter penting:**
+- `criterion`: Metode split ('gini' atau 'entropy')
+- `max_depth`: Kedalaman maksimal tree (None = unlimited)
+- `min_samples_split`: Minimal sampel untuk split node
+- `min_samples_leaf`: Minimal sampel di setiap leaf
 
 ### Mengubah Rasio Train/Test Split
 
-Edit di decision_tree_model.py:
+Edit di `decision_tree_model.py`:
 
 ```python
-TEST_SIZE = 0.3  # Ubah menjadi 70% train, 30% test
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42  # Ubah menjadi 70% train, 30% test
+)
 ```
 
 ---
 
-##  Dataset
+## 📊 Dataset
 
 ### Format Dataset
 
-Dataset harus berformat CSV dengan struktur:
+Dataset harus berformat CSV dengan struktur: 
 
 | Kolom | Tipe | Deskripsi |
 |-------|------|-----------|
-| Feature 1 | Numeric/Categorical | Fitur prediksi |
-| Feature 2 | Numeric/Categorical | Fitur prediksi |
-| ... | ... | ... |
-| diabetes | Categorical | Target variable (0/1 atau No/Yes) |
+| gender | Categorical | Jenis kelamin |
+| age | Numeric | Usia pasien |
+| hypertension | Numeric | Status hipertensi (0/1) |
+| heart_disease | Numeric | Status penyakit jantung (0/1) |
+| smoking_history | Categorical | Riwayat merokok |
+| bmi | Numeric | Body Mass Index |
+| HbA1c_level | Numeric | Level HbA1c |
+| blood_glucose_level | Numeric | Level glukosa darah |
+| diabetes | Categorical | Target variable (0/1) |
 
 ### Lokasi Dataset
 
-- **Input:** cleaned_diabetes_dataset.csv (dataset asli)
-- **Output:** 
-educed_6Fitur_diabetes_dataset.csv (hasil feature selection)
+- **Input:** `cleaned_diabetes_dataset.csv` (dataset yang sudah dibersihkan)
+- **Output:** `reduced_6Fitur_diabetes_dataset. csv` (hasil feature selection)
+- **Archived:** `diabetes_prediction_dataset.csv. zip` (dataset asli compressed)
 
-**Catatan:** Ubah path di konfigurasi sesuai lokasi dataset Anda.
-
----
-
-##  Visualisasi
-
-### 1. Confusion Matrix
-
-![Confusion Matrix Example](confusion_matrix.png)
-
-Menampilkan:
-- True Positive (TP)
-- True Negative (TN)
-- False Positive (FP)
-- False Negative (FN)
-
-### 2. Feature Importance
-
-![Feature Importance Example](feature_importance.png)
-
-Menampilkan kontribusi setiap fitur dalam prediksi model.
-
-### 3. Decision Tree Structure (Optional)
-
-Visualisasi struktur lengkap Decision Tree (dapat menghasilkan file besar).
+**⚠️ Catatan:** Dataset CSV diabaikan oleh Git (lihat `.gitignore`), jadi Anda perlu extract dan prepare dataset sendiri.
 
 ---
 
-##  Dependencies
+## 📦 Dependencies
 
 Proyek ini membutuhkan library Python berikut:
 
-```
-pandas>=1.5.0          # Data manipulation
-numpy>=1.23.0          # Numerical computing
-scikit-learn>=1.2.0    # Machine learning
-matplotlib>=3.6.0      # Plotting
-seaborn>=0.12.0        # Statistical visualization
+```python
+pandas                 # Data manipulation
+numpy                  # Numerical computing
+scikit-learn           # Machine learning (DecisionTreeClassifier, train_test_split, metrics)
+matplotlib             # Plotting
+seaborn                # Statistical visualization
 ```
 
-Install semua dependencies:
+**Install di Google Colab:**
+
+Semua library sudah ter-install secara default di Google Colab. Jika ada yang kurang, install dengan:
 
 ```bash
-pip install -r requirements.txt
+!pip install pandas numpy scikit-learn matplotlib seaborn
 ```
 
 ---
 
-##  Tips & Best Practices
+## 🎯 Panduan Lengkap Google Colab
 
-### 1. **Handling Imbalanced Data**
+### Step-by-Step: 
 
-Jika dataset tidak seimbang, gunakan:
+**1. Buka Google Colab**
+- Kunjungi [colab.research.google.com](https://colab.research.google.com)
+- Buat notebook baru
+
+**2. Feature Selection**
+
+Cell 1:
 ```python
-from sklearn.utils import resample
-# Atau
-from imblearn.over_sampling import SMOTE
+# Upload mutual_information_selection.py
+from google.colab import files
+uploaded = files.upload()
 ```
 
-### 2. **Cross-Validation**
+Cell 2:
+```python
+# Jalankan feature selection
+%run mutual_information_selection.py
+```
+
+Cell 3:
+```python
+# Download hasil feature selection
+files.download('reduced_6Fitur_diabetes_dataset.csv')
+```
+
+**3. Training Model**
+
+Cell 1:
+```python
+# Upload decision_tree_model.py
+from google.colab import files
+uploaded = files.upload()
+```
+
+Cell 2:
+```python
+# Jalankan training model
+%run decision_tree_model.py
+# Akan muncul prompt untuk upload dataset hasil feature selection
+```
+
+**Output yang diharapkan:**
+```
+Akurasi Model: XX. XX%
+[Visualisasi Confusion Matrix]
+```
+
+---
+
+## 💡 Tips & Best Practices
+
+### 1. **Handling Path Issues di Colab**
+
+Jika `mutual_information_selection.py` error karena path, ubah baris 6 menjadi:
+
+```python
+# Dari:
+df = pd.read_csv(r"C:\Users\rifki\Downloads\cleaned_diabetes_dataset. csv")
+
+# Menjadi (upload file):
+from google.colab import files
+uploaded = files.upload()
+file_name = list(uploaded.keys())[0]
+df = pd.read_csv(file_name)
+```
+
+### 2. **Evaluasi Lebih Detail**
+
+Tambahkan metrik evaluasi lain di `decision_tree_model.py`:
+
+```python
+from sklearn.metrics import classification_report, precision_score, recall_score, f1_score
+
+# Setelah y_pred = model.predict(X_test)
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+print(f"Precision: {precision_score(y_test, y_pred):.2f}")
+print(f"Recall: {recall_score(y_test, y_pred):.2f}")
+print(f"F1-Score: {f1_score(y_test, y_pred):.2f}")
+```
+
+### 3. **Cross-Validation**
 
 Untuk evaluasi lebih robust:
+
 ```python
 from sklearn.model_selection import cross_val_score
-scores = cross_val_score(model, X, y, cv=5)
-print(f"CV Accuracy: {scores.mean():.2f} (+/- {scores.std():.2f})")
+
+# Sebelum train_test_split, tambahkan:
+cv_scores = cross_val_score(model, X, y, cv=5)
+print(f"CV Accuracy: {cv_scores.mean():.2f} (+/- {cv_scores.std():.2f})")
 ```
 
-### 3. **Hyperparameter Tuning**
+### 4. **Feature Importance**
 
-Gunakan GridSearchCV:
+Lihat fitur mana yang paling penting dalam prediksi:
+
 ```python
-from sklearn.model_selection import GridSearchCV
+# Setelah model. fit()
+feature_importance = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': model.feature_importances_
+}).sort_values(by='Importance', ascending=False)
 
-param_grid = {
-    'max_depth': [3, 5, 7, 10, None],
-    'min_samples_split': [2, 5, 10],
-    'criterion': ['gini', 'entropy']
-}
+print("\nFeature Importance:")
+print(feature_importance)
 
-grid_search = GridSearchCV(
-    DecisionTreeClassifier(random_state=42),
-    param_grid,
-    cv=5,
-    scoring='accuracy'
+# Visualisasi
+plt.figure(figsize=(10, 6))
+plt.barh(feature_importance['Feature'], feature_importance['Importance'])
+plt.xlabel('Importance')
+plt.title('Feature Importance')
+plt.gca().invert_yaxis()
+plt.show()
+```
+
+### 5. **Mencegah Overfitting**
+
+Modifikasi parameter model:
+
+```python
+model = DecisionTreeClassifier(
+    random_state=42,
+    max_depth=5,              # Batasi kedalaman
+    min_samples_split=20,     # Minimal 20 sampel untuk split
+    min_samples_leaf=10       # Minimal 10 sampel di leaf
 )
-grid_search.fit(X_train, y_train)
-print(f"Best params: {grid_search.best_params_}")
 ```
-
-### 4. **Mencegah Overfitting**
-
-- Batasi max_depth
-- Tingkatkan min_samples_split dan min_samples_leaf
-- Gunakan pruning
-- Lakukan cross-validation
 
 ---
 
-##  Troubleshooting
+## 🐛 Troubleshooting
 
-### Error: "File not found"
+### Error: "File not found" di mutual_information_selection.py
 
 **Solusi:**
-- Pastikan path dataset sudah benar
-- Gunakan absolute path atau pastikan file ada di direktori yang sama
-
 ```python
-INPUT_FILE = r"C:\path\to\your\cleaned_diabetes_dataset.csv"
+# Gunakan upload file Colab
+from google.colab import files
+uploaded = files. upload()
+file_name = list(uploaded.keys())[0]
+df = pd.read_csv(file_name)
 ```
 
-### Error: "Column 'diabetes' not found"
+### Error: "KeyError: 'diabetes'"
 
 **Solusi:**
-- Periksa nama kolom target di dataset
-- Ubah 	arget_column di fungsi prepare_data()
+- Pastikan kolom target bernama 'diabetes'
+- Cek nama kolom:  `print(df.columns)`
+- Ubah nama kolom jika perlu:  `df.rename(columns={'old_name':  'diabetes'}, inplace=True)`
 
+### Warning: Mixed types in LabelEncoder
+
+**Solusi:**
 ```python
-X, y = prepare_data(data, target_column='your_target_column_name')
+# Ubah tipe data ke string dulu
+for col in df_encoded.select_dtypes(include=['object']).columns:
+    df_encoded[col] = df_encoded[col].astype(str)
+    le = LabelEncoder()
+    df_encoded[col] = le. fit_transform(df_encoded[col])
 ```
 
-### Warning: "LabelEncoder with mixed types"
+### Model Accuracy Rendah
 
-**Solusi:**
-- Pastikan fitur kategorikal sudah dalam tipe data yang konsisten
-- Convert ke string terlebih dahulu jika perlu
-
-```python
-df[col] = df[col].astype(str)
-```
-
-### Model Accuracy rendah
-
-**Solusi:**
-1. Periksa distribusi kelas (imbalanced?)
-2. Lakukan hyperparameter tuning
-3. Coba algoritma lain (Random Forest, XGBoost)
-4. Tambah atau ubah fitur (feature engineering)
-5. Periksa data quality (missing values, outliers)
+**Penyebab dan Solusi:**
+1. **Data tidak seimbang** → Gunakan SMOTE atau class_weight
+2. **Overfitting** → Kurangi max_depth, tingkatkan min_samples_split
+3. **Underfitting** → Tambah max_depth, coba Random Forest
+4. **Feature kurang informatif** → Turunkan MI threshold atau feature engineering
 
 ---
 
-##  Resources
+## 📚 Resources
 
 ### Dokumentasi
 
 - [scikit-learn Decision Tree](https://scikit-learn.org/stable/modules/tree.html)
 - [Mutual Information](https://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.mutual_info_classif.html)
 - [pandas Documentation](https://pandas.pydata.org/docs/)
+- [Google Colab Guide](https://colab.research.google.com/notebooks/welcome. ipynb)
 
-### Referensi
+### Dataset Source
 
-- Breiman, L. (1984). Classification and Regression Trees
-- Shannon, C. E. (1948). A Mathematical Theory of Communication
-
----
-
-##  Kelompok 3
-
-**Diabetes Detection Project**
-
-Developed with  for Machine Learning course
+- Dataset diabetes prediction dari Kaggle atau sumber lainnya
+- Format:  CSV dengan kolom fitur kesehatan dan target diabetes
 
 ---
 
-##  License
+## 👥 Kelompok 3
 
-This project is created for educational purposes.
+**Diabetes Prediction Project**
 
----
-
-##  Changelog
-
-### Version 1.0.0
--  Initial release
--  Mutual Information feature selection
--  Decision Tree Classifier implementation
--  Comprehensive evaluation metrics
--  Visualization tools
--  Google Colab support
+Developed for Machine Learning course 🎓
 
 ---
 
-##  Support
+## 📝 Changelog
 
-Jika ada pertanyaan atau masalah, silakan buat issue di repository ini atau hubungi tim pengembang.
+### Version 1.0.0 (Current)
+- ✅ Initial release
+- ✅ Mutual Information feature selection implementation
+- ✅ Decision Tree Classifier implementation
+- ✅ Basic evaluation metrics (Accuracy, Confusion Matrix)
+- ✅ Visualization with Seaborn
+- ✅ Google Colab optimized
 
-**Happy Coding! **
+---
 
+## 📄 License
+
+This project is created for educational purposes. 
+
+---
+
+## 🆘 Support
+
+Jika ada pertanyaan atau masalah: 
+- Buat issue di repository ini
+- Hubungi tim pengembang Kelompok 3
+
+**Happy Coding!  🚀📊🤖**
