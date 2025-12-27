@@ -25,7 +25,7 @@ DT_Diabetes/
  README.md                          # Dokumentasi proyek
  .gitignore                         # File yang diabaikan Git
 
- cleaned_diabetes_dataset.csv       # Dataset asli (tidak di-commit)
+ cleaned_diabetes_dataset.csv       # Dataset asli 
  reduced_6Fitur_diabetes_dataset.csv # Dataset hasil feature selection
 ```
 
@@ -49,7 +49,8 @@ python mutual_information_selection.py
 
 **Output:**
 - Tabel Mutual Information scores untuk setiap fitur
-- File educed_6Fitur_diabetes_dataset.csv dengan fitur terpilih
+- File 
+educed_6Fitur_diabetes_dataset.csv dengan fitur terpilih
 
 #### 3. **Training dan Evaluasi Model**
 
@@ -87,7 +88,8 @@ Upload kedua file Python ke Google Colab:
 !python decision_tree_model.py
 ```
 
-Atau gunakan fungsi un_in_colab() yang sudah disediakan:
+Atau gunakan fungsi 
+un_in_colab() yang sudah disediakan:
 
 ```python
 from decision_tree_model import run_in_colab
@@ -232,7 +234,8 @@ Dataset harus berformat CSV dengan struktur:
 ### Lokasi Dataset
 
 - **Input:** cleaned_diabetes_dataset.csv (dataset asli)
-- **Output:** educed_6Fitur_diabetes_dataset.csv (hasil feature selection)
+- **Output:** 
+educed_6Fitur_diabetes_dataset.csv (hasil feature selection)
 
 **Catatan:** Ubah path di konfigurasi sesuai lokasi dataset Anda.
 
@@ -422,3 +425,4 @@ This project is created for educational purposes.
 Jika ada pertanyaan atau masalah, silakan buat issue di repository ini atau hubungi tim pengembang.
 
 **Happy Coding! **
+
